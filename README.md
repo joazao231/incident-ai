@@ -2,6 +2,8 @@
 
 Backend de portfólio em Java 17 e Spring Boot 4.1 para cadastrar aplicações, verificar endpoints HTTP periodicamente, medir latência, registrar eventos e gerenciar incidentes.
 
+**Demo online:** https://incident-ai-ad5i.onrender.com
+
 ## Recursos
 
 - CRUD validado de aplicações monitoradas.
@@ -103,3 +105,4 @@ Invoke-RestMethod http://localhost:8080/api/applications/1/check -Method POST
 | `INITIAL_ADMIN_PASSWORD` | `admin123` |
 
 > Em produção, defina obrigatoriamente `JWT_SECRET` com um valor longo e aleatório e altere `INITIAL_ADMIN_PASSWORD` antes da primeira inicialização.
+
