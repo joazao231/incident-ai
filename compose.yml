@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: incident_ai
+      POSTGRES_USER: incident_ai
+      POSTGRES_PASSWORD: incident_ai
+    ports: ["5432:5432"]
+    volumes: ["incident-ai-data:/var/lib/postgresql/data"]
+  api:
+    build: .
+    depends_on: [postgres]
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/incident_ai
+      DATABASE_USERNAME: incident_ai
+      DATABASE_PASSWORD: incident_ai
+      JWT_SECRET: change-this-secret-before-production-123456
+      INITIAL_ADMIN_USERNAME: admin
+      INITIAL_ADMIN_PASSWORD: change-me-now
+    ports: ["8080:8080"]
+volumes:
+  incident-ai-data:

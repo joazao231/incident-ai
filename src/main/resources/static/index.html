@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Dashboard de monitoramento e incidentes">
+  <title>Incident AI — Operations Console</title>
+  <link rel="stylesheet" href="/dashboard/app.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+
+  <main id="loginView" class="login-view">
+    <section class="login-copy">
+      <div class="brand"><span class="brand-mark">IA</span><span>INCIDENT AI</span></div>
+      <p class="eyebrow">OPERATIONS INTELLIGENCE</p>
+      <h1>Clareza quando<br><em>cada segundo importa.</em></h1>
+      <p class="lead">Monitore serviços, detecte degradações e conduza incidentes em um único lugar.</p>
+      <div class="signal-row"><span><i class="signal green"></i> Monitoramento contínuo</span><span><i class="signal blue"></i> Resposta coordenada</span></div>
+    </section>
+    <section class="login-card">
+      <div class="mobile-brand"><span class="brand-mark">IA</span> INCIDENT AI</div>
+      <p class="eyebrow">ACESSO SEGURO</p><h2>Bem-vindo de volta</h2><p class="muted">Entre para acessar o console de operações.</p>
+      <form id="loginForm">
+        <label>Usuário<input id="username" autocomplete="username" value="admin" required></label>
+        <label>Senha<input id="password" type="password" autocomplete="current-password" value="admin123" required></label>
+        <button class="button primary wide" type="submit"><span>Entrar no console</span><b>→</b></button>
+        <p id="loginError" class="form-error" role="alert"></p>
+      </form>
+      <p class="demo-hint">Primeiro acesso local: <code>admin</code> / <code>admin123</code></p>
+    </section>
+  </main>
+
+  <div id="appView" class="app-view hidden">
+    <aside class="sidebar">
+      <div class="brand side-brand"><span class="brand-mark">IA</span><span>INCIDENT AI</span></div>
+      <nav>
+        <button class="nav-item active" data-page="overview"><span>◫</span> Visão geral</button>
+        <button class="nav-item" data-page="services"><span>⌁</span> Serviços</button>
+        <button class="nav-item" data-page="incidents"><span>△</span> Incidentes <b id="incidentBadge" class="nav-badge">0</b></button>
+        <button class="nav-item admin-only" data-page="users"><span>♙</span> Usuários</button>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="system-state"><i class="signal green"></i><div><small>PLATAFORMA</small><strong>Operacional</strong></div></div>
+        <button id="logoutButton" class="logout">Sair</button>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <button id="menuButton" class="menu-button">☰</button>
+        <div><p class="eyebrow" id="pageEyebrow">COMMAND CENTER</p><h2 id="pageTitle">Visão geral</h2></div>
+        <div class="user-chip"><span id="userInitials">AD</span><div><strong id="userName">Administrador</strong><small id="userRole">ADMIN</small></div></div>
+      </header>
+
+      <main class="content">
+        <section id="overviewPage" class="page active">
+          <div class="hero-strip"><div><p class="eyebrow">STATUS DO AMBIENTE</p><h3 id="environmentHeadline">Carregando o ambiente...</h3><p id="lastUpdate" class="muted">Sincronizando dados</p></div><button class="button ghost" data-refresh>↻ Atualizar</button></div>
+          <div class="metrics">
+            <article class="metric"><span class="metric-icon healthy">●</span><div><small>SAUDÁVEIS</small><strong id="healthyCount">0</strong><p>Serviços operacionais</p></div></article>
+            <article class="metric"><span class="metric-icon degraded">●</span><div><small>DEGRADADOS</small><strong id="degradedCount">0</strong><p>Requerem atenção</p></div></article>
+            <article class="metric"><span class="metric-icon down">●</span><div><small>INDISPONÍVEIS</small><strong id="downCount">0</strong><p>Impacto confirmado</p></div></article>
+            <article class="metric"><span class="metric-icon incident">△</span><div><small>INCIDENTES ABERTOS</small><strong id="openCount">0</strong><p>Em acompanhamento</p></div></article>
+          </div>
+          <div class="grid-main">
+            <section class="panel"><div class="panel-head"><div><p class="eyebrow">SERVIÇOS</p><h3>Saúde das aplicações</h3></div><button class="text-button" data-go="services">Ver todos →</button></div><div id="servicePreview" class="service-list empty-state">Nenhuma aplicação cadastrada.</div></section>
+            <section class="panel"><div class="panel-head"><div><p class="eyebrow">ATIVIDADE</p><h3>Incidentes recentes</h3></div><button class="text-button" data-go="incidents">Ver todos →</button></div><div id="incidentPreview" class="timeline empty-state">Nenhum incidente registrado.</div></section>
+          </div>
+        </section>
+
+        <section id="servicesPage" class="page">
+          <div class="section-actions"><div><p class="muted">Aplicações e endpoints sob monitoramento.</p></div><button id="newApplicationButton" class="button primary admin-only">+ Nova aplicação</button></div>
+          <section class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>Aplicação</th><th>Ambiente</th><th>Status</th><th>Latência</th><th>Última verificação</th><th></th></tr></thead><tbody id="servicesTable"></tbody></table></div></section>
+        </section>
+
+        <section id="incidentsPage" class="page">
+          <div class="section-actions"><p class="muted">Histórico e resposta aos incidentes detectados.</p><select id="incidentFilter"><option value="">Todos os status</option><option value="OPEN">Abertos</option><option value="ACKNOWLEDGED">Reconhecidos</option><option value="RESOLVED">Resolvidos</option></select></div>
+          <section class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>Incidente</th><th>Aplicação</th><th>Severidade</th><th>Status</th><th>Abertura</th><th></th></tr></thead><tbody id="incidentsTable"></tbody></table></div></section>
+        </section>
+
+        <section id="usersPage" class="page">
+          <div class="section-actions"><p class="muted">Acessos administrativos e somente leitura.</p><button id="newUserButton" class="button primary">+ Novo usuário</button></div>
+          <section class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>Nome</th><th>Usuário</th><th>Perfil</th><th>Status</th><th>Criado em</th></tr></thead><tbody id="usersTable"></tbody></table></div></section>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog id="applicationDialog" class="modal"><form id="applicationForm" method="dialog"><div class="modal-head"><div><p class="eyebrow">NOVO MONITORAMENTO</p><h3>Cadastrar aplicação</h3></div><button type="button" class="modal-close" data-close>×</button></div><label>Nome<input name="name" required maxlength="120" placeholder="Ex.: Billing API"></label><label>URL do endpoint<input name="url" type="url" required placeholder="https://api.exemplo.com/health"></label><div class="form-grid"><label>Ambiente<select name="environment"><option>PRODUCTION</option><option>STAGING</option><option>DEVELOPMENT</option></select></label><label class="toggle-label"><input name="monitoringEnabled" type="checkbox" checked> Monitoramento ativo</label></div><p class="form-error"></p><div class="modal-actions"><button type="button" class="button ghost" data-close>Cancelar</button><button class="button primary" type="submit">Cadastrar aplicação</button></div></form></dialog>
+
+  <dialog id="userDialog" class="modal"><form id="userForm" method="dialog"><div class="modal-head"><div><p class="eyebrow">CONTROLE DE ACESSO</p><h3>Criar usuário</h3></div><button type="button" class="modal-close" data-close>×</button></div><label>Nome<input name="name" required maxlength="120"></label><label>Usuário<input name="username" required minlength="3"></label><label>Senha inicial<input name="password" type="password" required minlength="8"></label><label>Perfil<select name="role"><option value="VIEWER">VIEWER — somente consulta</option><option value="ADMIN">ADMIN — controle total</option></select></label><p class="form-error"></p><div class="modal-actions"><button type="button" class="button ghost" data-close>Cancelar</button><button class="button primary" type="submit">Criar usuário</button></div></form></dialog>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/dashboard/app.js" defer></script>
+</body>
+</html>

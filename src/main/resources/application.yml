@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: incident-ai-backend
+  datasource:
+    url: ${DATABASE_URL:jdbc:h2:file:./data/incident-ai;MODE=PostgreSQL;AUTO_SERVER=TRUE}
+    username: ${DATABASE_USERNAME:sa}
+    password: ${DATABASE_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  jackson:
+    default-property-inclusion: non_null
+server:
+  port: ${PORT:8080}
+management:
+  endpoints.web.exposure.include: health,info,metrics
+  endpoint.health.show-details: when_authorized
+info.app:
+  name: Incident AI
+  description: Monitoramento e gestão automática de incidentes
+  version: 1.0.0
+incident-ai.monitoring:
+  enabled: ${MONITORING_ENABLED:true}
+  fixed-delay-ms: ${MONITORING_INTERVAL_MS:60000}
+  timeout-ms: ${MONITORING_TIMEOUT_MS:5000}
+  degraded-threshold-ms: ${DEGRADED_THRESHOLD_MS:1500}
+incident-ai.security:
+  jwt-secret: ${JWT_SECRET:incident-ai-local-secret-change-me-2026}
+  token-expiration-seconds: ${TOKEN_EXPIRATION_SECONDS:28800}
+  initial-admin-name: ${INITIAL_ADMIN_NAME:Administrador}
+  initial-admin-username: ${INITIAL_ADMIN_USERNAME:admin}
+  initial-admin-password: ${INITIAL_ADMIN_PASSWORD:admin123}
+springdoc.swagger-ui.path: /swagger-ui.html

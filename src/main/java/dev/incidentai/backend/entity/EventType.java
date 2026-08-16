@@ -1,0 +1,2 @@
+package dev.incidentai.backend.entity;
+public enum EventType { CHECK_SUCCEEDED, CHECK_DEGRADED, CHECK_FAILED, INCIDENT_OPENED, INCIDENT_ACKNOWLEDGED, INCIDENT_RESOLVED }

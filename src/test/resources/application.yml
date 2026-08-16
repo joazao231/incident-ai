@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:incidentai;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    hibernate.ddl-auto: create-drop
+incident-ai.monitoring:
+  enabled: false
+  fixed-delay-ms: 3600000
+incident-ai.security:
+  jwt-secret: incident-ai-test-secret-with-at-least-32-characters
+  token-expiration-seconds: 28800
+  initial-admin-name: Administrador de Teste
+  initial-admin-username: admin
+  initial-admin-password: admin123

@@ -103,4 +103,3 @@ Invoke-RestMethod http://localhost:8080/api/applications/1/check -Method POST
 | `INITIAL_ADMIN_PASSWORD` | `admin123` |
 
 > Em produção, defina obrigatoriamente `JWT_SECRET` com um valor longo e aleatório e altere `INITIAL_ADMIN_PASSWORD` antes da primeira inicialização.
-
