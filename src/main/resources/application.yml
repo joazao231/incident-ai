@@ -1,10 +1,18 @@
 spring:
   application:
     name: incident-ai-backend
+  main:
+    lazy-initialization: ${SPRING_LAZY_INITIALIZATION:false}
+  jmx:
+    enabled: false
   datasource:
-    url: ${DATABASE_URL:jdbc:h2:file:./data/incident-ai;MODE=PostgreSQL;AUTO_SERVER=TRUE}
+    url: ${DATABASE_URL:jdbc:h2:file:./data/incident-ai;MODE=PostgreSQL}
     username: ${DATABASE_USERNAME:sa}
     password: ${DATABASE_PASSWORD:}
+    hikari:
+      maximum-pool-size: ${DATABASE_POOL_MAX_SIZE:3}
+      minimum-idle: ${DATABASE_POOL_MIN_IDLE:1}
+      connection-timeout: ${DATABASE_CONNECTION_TIMEOUT_MS:10000}
   jpa:
     hibernate:
       ddl-auto: update
@@ -13,6 +21,12 @@ spring:
     default-property-inclusion: non_null
 server:
   port: ${PORT:8080}
+  tomcat:
+    threads:
+      max: ${SERVER_MAX_THREADS:20}
+      min-spare: ${SERVER_MIN_SPARE_THREADS:2}
+    max-connections: ${SERVER_MAX_CONNECTIONS:100}
+    accept-count: ${SERVER_ACCEPT_COUNT:20}
 management:
   endpoints.web.exposure.include: health,info,metrics
   endpoint.health.show-details: when_authorized
@@ -32,3 +46,4 @@ incident-ai.security:
   initial-admin-username: ${INITIAL_ADMIN_USERNAME:admin}
   initial-admin-password: ${INITIAL_ADMIN_PASSWORD:admin123}
 springdoc.swagger-ui.path: /swagger-ui.html
+
