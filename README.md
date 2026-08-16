@@ -114,4 +114,3 @@ Invoke-RestMethod http://localhost:8080/api/applications/1/check -Method POST
 O contêiner limita o uso de heap, metaspace, cache de código e pilhas de threads para operar com mais estabilidade em instâncias de 512 MB. Ele também ativa inicialização preguiçosa e usa o coletor Serial GC, priorizando um cold start menor em ambientes com pouca CPU. Os pools de conexões e de requisições são reduzidos para o perfil de demonstração; todos os limites podem ser ajustados pelas variáveis documentadas acima.
 
 No plano gratuito do Render, o serviço entra em suspensão após um período sem acessos. Por isso, o primeiro acesso ainda pode levar alguns instantes, mesmo com as otimizações.
-
