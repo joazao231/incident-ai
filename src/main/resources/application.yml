@@ -46,4 +46,3 @@ incident-ai.security:
   initial-admin-username: ${INITIAL_ADMIN_USERNAME:admin}
   initial-admin-password: ${INITIAL_ADMIN_PASSWORD:admin123}
 springdoc.swagger-ui.path: /swagger-ui.html
-
